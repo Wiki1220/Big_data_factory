@@ -8,6 +8,25 @@
 - 生命周期状态：`state/`
 - 构建与交付产物：`artifacts/`
 
+推荐部署为三层：
+
+- 本地 AI：只负责需求收敛和触发工厂动作
+- Linux 工厂服务器：负责控制面、状态库和执行器
+- 目标 VM 网络：由服务器统一管理和验证
+
+推荐 SSH 责任链：
+
+```text
+AI workstation -> factory server -> target VMs
+```
+
+设计原则：
+
+- AI 默认只连接工厂服务器
+- 服务器统一连接和管理目标 VM
+- VM 不作为 AI 的主操作面
+- 所有 VM 级动作都应沉淀到 builder 或 verifier 中
+
 后续演进方向：
 
 - 增加规格校验 schema
