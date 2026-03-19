@@ -1,0 +1,55 @@
+metadata:
+  spec_id: hadoop-3node
+  version: 1
+  owner: platform-team
+  description: Three-node Hadoop cluster for offline delivery.
+
+target:
+  builder: vmware
+  export_format: ova
+  guest_os: rocky-9
+  vm_hardware_version: 20
+
+cluster:
+  name: hadoop-dev
+  environment: dev
+  domain: lab.local
+  nodes:
+    - name: master-01
+      role: master
+      cpu: 4
+      memory_mb: 8192
+      disk_gb: 120
+      ip: 192.168.56.11
+    - name: worker-01
+      role: worker
+      cpu: 4
+      memory_mb: 8192
+      disk_gb: 120
+      ip: 192.168.56.12
+    - name: worker-02
+      role: worker
+      cpu: 4
+      memory_mb: 8192
+      disk_gb: 120
+      ip: 192.168.56.13
+
+software:
+  java: 17.0.10
+  hadoop: 3.3.6
+  python: 3.11
+
+network:
+  gateway: 192.168.56.1
+  netmask: 255.255.255.0
+  dns:
+    - 223.5.5.5
+    - 119.29.29.29
+
+validation:
+  checks:
+    - boot
+    - ssh
+    - ping
+    - hdfs
+    - sample_job
